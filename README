@@ -1,0 +1,40 @@
+(****************************************************************************)
+(*                 The Calculus of Inductive Constructions                  *)
+(*                                                                          *)
+(*                                Projet Coq                                *)
+(*                                                                          *)
+(*                     INRIA                        ENS-CNRS                *)
+(*              Rocquencourt                        Lyon                    *)
+(*                                                                          *)
+(*                                Coq V5.10                                 *)
+(*                              July 1st 1995                               *)
+(*                                                                          *)
+(****************************************************************************)
+
+Representation of circuits as streams.
+Proof of a multiplier circuit.
+Christine Paulin-Mohring June 95.
+
+GFP.v : Impredicative representation of greatest 
+        fixpoints of monotonic operators.
+Streams.v : Representation of streams, invariant principle.
+Circ.v : Generic represention of sequential circuits from the 
+         updating and output functions.
+Multiplier.v : proof of a multiplier.
+
+This work is described in the following reference (file mult.ps.gz)
+Research Report : RR 95-16 
+Title : Circuits as streams in Coq: Verification of a sequential multiplier.
+Author : Christine Paulin-Mohring <Christine.Paulin@ens-lyon.fr>
+	 LIP, ENS Lyon, 46 allee d'Italie, F-69364 Lyon Cedex 07, France
+Date : September 95.
+Abstract: This paper presents the proof of correctness of a
+  multiplier circuit formalized in the Calculus of Inductive
+  Constructions. It uses a representation of the circuit as a function
+  from the stream of inputs to the stream of outputs. We analyze the
+  computational aspect of the impredicative encoding of coinductive
+  types and show how it can be used to represent synchronous circuits.
+  We identify general proof principles that can be used to justify the
+  correctness of such a circuit. The example and the principles have
+  been formalized in the Coq proof assistant.
+

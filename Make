@@ -1,0 +1,12 @@
+-R . Multiplier
+-impredicative-set
+GFP.v
+Streams.v
+Circ.v
+Multiplier.v
+-custom
+	"@echo '********* Test on one example **********'
+	ocaml test.ml
+	@echo '************ End of test ***************'"
+  "" test
+
