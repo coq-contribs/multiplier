@@ -1,12 +1,10 @@
 -R . Multiplier
--impredicative-set
+-arg -impredicative-set
 GFP.v
 Streams.v
 Circ.v
 Multiplier.v
--custom
+-extra test Multiplier.vo
 	"@echo '********* Test on one example **********'
 	$(CAMLBIN)ocaml test.ml
 	@echo '************ End of test ***************'"
-  "" test
-
