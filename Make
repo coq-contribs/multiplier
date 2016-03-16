@@ -1,9 +1,11 @@
 -R . Multiplier
 -arg -impredicative-set
+
 GFP.v
 Streams.v
 Circ.v
 Multiplier.v
+
 -extra test Multiplier.vo
 	"@echo '********* Test on one example **********'
 	$(CAMLBIN)ocaml test.ml
