@@ -55,7 +55,7 @@ Definition CoRec (X : Set) (f : X -> F (nu + X)) (x : X) : nu :=
   CoIt (nu + X)
     (fun z : nu + X =>
      match z return (F (nu + X)) with
-     | inl n => FMON _ _ (inl (A:=nu) X) (Out n)
+     | inl n => FMON _ _ inl (Out n)
      | inr y => f y
      end) (inr nu x).
 
