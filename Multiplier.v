@@ -55,13 +55,13 @@ Definition Mux (b : bool) (n m : nat) : nat :=
 (* Extra lemmas *)
 
 Lemma pred_SO : forall n : nat, pred n = 0 -> n <> 0 -> n = 1.
-simple destruct n; auto with v62.
-intros H1 H2; elim H2; auto with v62.
+simple destruct n; auto with arith.
+intros H1 H2; elim H2; auto with arith.
 Qed.
 
 Lemma plus_mult_pred : forall n m : nat, n <> 0 -> pred n * m + m = n * m.
 simple destruct n; simpl in |- *; intros;
- [ elim H; trivial with v62 | auto with v62 ].
+ [ elim H; trivial with arith | auto with arith ].
 Qed.
 
 (* The updating function *)
@@ -74,13 +74,13 @@ Definition upd3 (i1 i2 r1 : nat) (r3 : bool) :=
 
 Lemma upd3_true :
  forall i1 i2 r1 : nat, upd3 i1 i2 r1 true = zerob (pred i1) || zerob i2.
-trivial with v62.
+trivial with bool.
 Qed.
 
 Lemma upd3_false :
  forall i1 i2 r1 : nat,
  upd3 i1 i2 r1 false = zerob (pred (pred r1)) || zerob i2.
-trivial with v62.
+trivial with bool.
 Qed.
 
 Record TR : Set := reg {reg1 : nat; reg2 : nat; reg3 : bool}.
@@ -110,8 +110,8 @@ Definition XY := Build_TI X Y.
 
 Lemma nth_i0_O : XY = NTH _ i0 0.
 replace (NTH _ i0 0) with (HD _ i0).
-unfold XY, X, Y in |- *; elim (HD _ i0); trivial with v62.
-trivial with v62.
+unfold XY, X, Y in |- *; elim (HD _ i0); trivial.
+trivial.
 Qed.
 Hint Resolve nth_i0_O.
 
@@ -120,17 +120,17 @@ Definition stable (n : nat) : Prop :=
 Hint Unfold stable.
 
 Lemma stable_O : stable 0.
-auto with v62.
+auto with arith.
 Qed.
 Hint Resolve stable_O.
 
 Lemma stable_S : forall n : nat, stable (S n) -> stable n.
-intros n H; inversion H; auto with v62.
+intros n H; inversion H; auto with arith.
 Qed.
 Hint Immediate stable_S.
 
 Lemma stable_Sn : forall n : nat, stable (S n) -> XY = NTH _ i0 n.
-intros n H; inversion H; trivial with v62.
+intros n H; inversion H; trivial.
 Qed.
 Hint Immediate stable_Sn.
 
@@ -145,7 +145,7 @@ Definition InvM (n : nat) (r : TR) : Prop :=
 
 Lemma InvM_init : InvM 0 init.
 red in |- *; intro; unfold reg3 in |- *; simpl in |- *.
-left; simple destruct 1; auto with v62.
+left; simple destruct 1; auto.
 Qed.
 
 Lemma InvM_stable :
@@ -157,62 +157,62 @@ split.
 (* Proof of (Q n (output (Nth i0 n) r)) *)
 red in |- *; simpl in |- *.
 intros H0 H1 H2.
-elim (Iftrue_inv _ _ _ (H H0)); auto with v62.
+elim (Iftrue_inv _ _ _ (H H0)); auto.
 
 (* Proof of (InvM (S n) (update (Nth i0 n) r)) *)
 red in |- *; simpl in |- *; intro.
 replace (NTH _ i0 n) with XY; simpl in |- *.
 (* Proof of (Nth i0 n)=XY *) 
-2: auto with v62.
+2: auto.
 (* Cases on the value of (reg3 r) *)
 elim H; simpl in |- *; intros.
 (* Proof that (stable n) *)
-3: auto with v62.
+3: auto with bool.
 (* Case (reg3 r)=true *)
 rewrite upd3_true.
 (* Case analysis wether X=0 *)
 case X.
 (* X=0 *)
-simpl in |- *; auto with v62.
+     simpl in |- *; auto with bool.
 (* X'<>0 *)
 (* Case analysis wether Y=0 *)
 intro X'; case Y; simpl in |- *.
 (* Y = O *)
-rewrite orb_b_true; auto with v62.
+rewrite orb_b_true; auto with bool.
 (* Y=(S Y')<>0 *)
 (* Case analysis wether X'=0 *)
 intro Y'; case X'; simpl in |- *.
 (* X'=O *)
-auto with v62.
+auto with bool.
 (* X' = (S X'') <> 0 *)
 intro X''.
-right; split; [ auto with v62 | split ].
-auto with v62.
-apply eq_S; elim plus_n_Sm; elim plus_n_Sm; auto with v62.
+right; split; [ auto with bool | split ].
+auto with bool.
+apply eq_S; elim plus_n_Sm; elim plus_n_Sm; auto with arith.
 (* Case (reg3 r)=false *)
 rewrite upd3_false.
 case H1; clear H1; intros.
 case H2; clear H2; intros.
-rewrite (zerob_false_intro X); trivial with v62; simpl in |- *.
+rewrite (zerob_false_intro X); trivial; simpl in |- *.
 (* Case analysis whether Y=0 *)
 generalize H3; clear H3; case Y; simpl in |- *.
 (* Y=O *)
-do 3 elim mult_n_O; rewrite orb_b_true; auto with v62.
+do 3 elim mult_n_O; rewrite orb_b_true; auto with bool.
 (* Y=(S Y') *)
 intro Y'; elim (eq_nat_dec (pred (pred (reg1 r))) 0); intro H3.
 (* (pred (pred (reg1 r))=O *)
 rewrite H3; simpl in |- *.
-rewrite (pred_SO (pred (reg1 r))); trivial with v62; simpl in |- *.
-elim plus_n_O; auto with v62.
+rewrite (pred_SO (pred (reg1 r))); trivial; simpl in |- *.
+elim plus_n_O; auto with bool.
 (* (pred (pred (reg1 r)))<>O *)
-intros; rewrite zerob_false_intro; trivial with v62; simpl in |- *.
+intros; rewrite zerob_false_intro; trivial; simpl in |- *.
 right; intros.
-split; trivial with v62.
-split; trivial with v62.
+split; trivial.
+split; trivial.
 elim H4.
-replace (S (Y' + reg2 r)) with (S Y' + reg2 r); trivial with v62.
+replace (S (Y' + reg2 r)) with (S Y' + reg2 r); trivial.
 rewrite plus_assoc.
-rewrite (plus_mult_pred (pred (reg1 r)) (S Y')); auto with v62.
+rewrite (plus_mult_pred (pred (reg1 r)) (S Y')); auto with bool.
 Qed.
 
 Theorem circ_mult_proof :
@@ -294,12 +294,12 @@ rewrite H3; exact iter_nb_non_O.
 red in |- *; simpl in |- *; intro.
 replace (NTH _ i0 n) with XY; simpl in |- *.
 (* Proof of (Nth i0 n)=XY *) 
-2: auto with v62.
+2: auto.
 (* Cases on the value of (reg3 r) *)
 split; intro A; [ inversion A | clear A ].
 elim H; simpl in |- *.
 (* Proof that (stable n) *)
-2: auto with v62.
+2: auto.
 case (eq_nat_dec n 0); intro A.
 rewrite A; simpl in |- *.
 intros; clear H2; split; auto; intros.

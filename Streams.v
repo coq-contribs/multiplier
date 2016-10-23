@@ -44,7 +44,7 @@ Variable A : Set.
 Let F (X : Set) := (A * X)%type.
 Definition Fmon : forall X Y : Set, (X -> Y) -> F X -> F Y.
 unfold F in |- *; intros.
-split; case H0; auto with v62.
+split; case H0; auto.
 Defined.
 
 Definition Str := nu F.
@@ -67,13 +67,13 @@ Let StrIt := STRIT.
 
 Lemma Hd_StrIt :
  forall (X : Set) (h : X -> A) (t : X -> X) (x : X), Hd (StrIt X h t x) = h x.
-trivial with v62.
+trivial.
 Qed.
 
 Lemma Tl_StrIt :
  forall (X : Set) (h : X -> A) (t : X -> X) (x : X),
  Tl (StrIt X h t x) = StrIt X h t (t x).
-trivial with v62.
+trivial.
 Qed.
 
 Fixpoint NTHTL (s : Str) (n : nat) {struct n} : Str :=
@@ -105,7 +105,7 @@ Theorem All_Q_Nthtl : forall n : nat, Q n (NthTl s n).
 intro n.
 cut (Inv n (NthTl s n)).
 intro I; case Inv_out with (1 := I); trivial.
-elim n; trivial with v62; intros.
+elim n; trivial; intros.
 simpl in |- *; case Inv_out with (1 := H); trivial.
 Qed.
 End Generic.
