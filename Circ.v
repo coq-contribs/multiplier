@@ -56,21 +56,21 @@ Let Circ := CIRC.
 
 Theorem Hd_Circ :
  forall (r : TR) (si : Str TI), HD _ (Circ r si) = output (HD _ si) r.
-trivial with v62.
+trivial.
 Qed.
 
 Theorem Tl_Circ :
  forall (r : TR) (si : Str TI),
  TL _ (Circ r si) = Circ (update (HD _ si) r) (TL _ si).
-trivial with v62.
+trivial.
 Qed.
 
 Definition Reg : Str TI * TR -> TR.
-simple destruct 1; trivial with v62.
+simple destruct 1; trivial.
 Defined.
 
 Definition Input : Str TI * TR -> Str TI.
-simple destruct 1; trivial with v62.
+simple destruct 1; trivial.
 Defined.
 
 Section CircProof.
@@ -86,7 +86,7 @@ Let inv_aux (n : nat) (s : Str TO) : Prop :=
   exists r : TR, inv n r /\ s = Circ r (NTHTL _ i0 n).
 
 Remark inv_aux_init : inv_aux 0 (Circ r0 i0).
-exists r0; auto with v62.
+exists r0; auto.
 Qed.
 Hint Resolve inv_aux_init.
 
@@ -101,14 +101,14 @@ Remark inv_aux_stable :
  inv_aux n s -> P n (HD _ s) /\ inv_aux (S n) (TL _ s).
 simple induction 1; simple induction 1; intros.
 rewrite H2; rewrite Tl_Circ; rewrite Hd_Circ.
-elim (inv_stable n x); intros; trivial with v62.
-split; trivial with v62.
-exists (update (NTH _ i0 n) x); auto with v62.
+elim (inv_stable n x); intros; trivial.
+split; trivial.
+exists (update (NTH _ i0 n) x); auto.
 Qed.
 Hint Resolve inv_aux_stable.
 
 Theorem Circ_property : forall n : nat, P n (NTH _ (Circ r0 i0) n).
-intro; apply All_Q_Nth with (Inv := inv_aux); auto with v62.
+intro; apply All_Q_Nth with (Inv := inv_aux); auto.
 Qed.
 
 End CircProof.
