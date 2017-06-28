@@ -44,6 +44,8 @@ Require Import IfProp.
 Require Import Streams.
 Require Import Circ.
 
+Require Extraction.
+
 (* Definition of each combinational part of the circuit *)
 
 Definition Mux (b : bool) (n m : nat) : nat :=
